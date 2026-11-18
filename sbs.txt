@@ -1,2 +1,0 @@
-1. npm init
-2. csomagok letöltése (express, dotenv, mysql2, sequelize, bcrypt, jsonwebtoken)
