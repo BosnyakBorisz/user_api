@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const userRepository = require('../repositories/user.repository');
 const AppError = require('../utils/AppError');
-const { use } = require('react');
 const { application } = require('express');
 const SALT_ROUND = 10;
 const pick = (obj, keys) => Object.fromEntries(keys.filter((k) => obj[k] !== undefined).map((k) => [k, obj[k]]));
@@ -13,6 +12,7 @@ module.exports = {
     async getById(id){
         const user = await userRepository.findById(id);
         if (!user) throw new AppError('Felhasználó nem található!', 404);
+        return user;
     },
     async create({name, email, password, role}){
         if(!name || !email || !password) throw new AppError('A név, az e-mail, a jelszó kötelező!', 400);
@@ -42,6 +42,8 @@ module.exports = {
         return user;
     },
     async remove(id){
-        if(!(await userRepository.remove(id))) throw new AppError('Felhasználó nem található!', 404)
+        if(!(await userRepository.remove(id))) throw new AppError('Felhasználó nem található!', 404);
+        /* await userService.remove(req.params.id);
+        res.status(204).end(); */
     }
 };
